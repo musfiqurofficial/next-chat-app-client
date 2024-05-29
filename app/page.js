@@ -57,7 +57,7 @@ const Chat = () => {
               type="text"
               id="username"
               name="username"
-              placeholder="User Name"
+              placeholder="Type user Name..."
               value={username}
               onChange={handleUsernameChange}
               onKeyDown={handleKeyPress}
