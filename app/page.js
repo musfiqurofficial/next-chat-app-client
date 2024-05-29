@@ -26,9 +26,12 @@ const Chat = () => {
 
   const handleButtonClick = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/saveUsername", {
-        username,
-      });
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/saveUsername`,
+        {
+          username,
+        }
+      );
       if (response.status === 200) {
         localStorage.setItem("username", username);
         window.location.href = `/messenger?username=${username}`;
