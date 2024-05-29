@@ -39,7 +39,7 @@ const Messenger = () => {
 
   useEffect(() => {
     if (user) {
-      const newSocket = io("http://localhost:5000", {
+      const newSocket = io(`${process.env.NEXT_PUBLIC_API_URL}`, {
         transports: ["websocket", "polling"],
         reconnection: true,
         reconnectionAttempts: 5,
@@ -99,13 +99,13 @@ const Messenger = () => {
   useEffect(() => {
     if (user) {
       axios
-        .get("http://localhost:5000/chatUsers")
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/chatUsers`)
         .then((response) => {
           setUsers(response.data);
           response.data.forEach((chatUser) => {
             axios
               .get(
-                `http://localhost:5000/messages/${user.username}/${chatUser.username}`
+                `${process.env.NEXT_PUBLIC_API_URL}/messages/${user.username}/${chatUser.username}`
               )
               .then((res) => {
                 const userMessages = res.data;
@@ -150,7 +150,7 @@ const Messenger = () => {
     (username) => {
       setSelectedUser({ username });
       axios
-        .get(`http://localhost:5000/messages/${user.username}/${username}`)
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/messages/${user.username}/${username}`)
         .then((response) => {
           setMessages(response.data);
           setUnreadMessages((prev) => {
@@ -236,7 +236,7 @@ const Messenger = () => {
 
   const handleDeleteMessage = async (messageId) => {
     try {
-      await axios.delete(`http://localhost:5000/messages/${messageId}`);
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/messages/${messageId}`);
       setMessages((prevMessages) =>
         prevMessages.filter((msg) => msg._id !== messageId)
       );
